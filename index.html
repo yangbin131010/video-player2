@@ -5,216 +5,191 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>像外之境 - 蓝田水陆庵彩塑艺术影像作品展</title>
 <style>
-  * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-  }
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
 
-  html, body {
-    width: 100%;
-    height: 100%;
-    font-family: "PingFang SC", "Microsoft YaHei", serif;
-    color: #fff;
-    overflow: hidden;
-  }
+    html, body {
+        width: 100%;
+        height: 100%;
+        font-family: "PingFang SC", "Microsoft YaHei", serif;
+        color: #fff;
+        overflow: hidden;
+        background: #c4c4c4;
+    }
 
-  .bg {
-    position: fixed;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    background: url("bg.jpg") center/cover no-repeat;
-    z-index: 0;
-  }
+    .header {
+        position: absolute;
+        top: 60px;
+        left: 60px;
+        display: flex;
+        gap: 40px;
+        opacity: 0.9;
+    }
+    .org {
+        font-size: 18px;
+        line-height: 1.4;
+    }
+    .org-en {
+        font-size: 14px;
+        opacity: 0.7;
+    }
 
-  .bg::after {
-    content: '';
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0,0,0,0.25);
-  }
+    .title-box {
+        position: absolute;
+        bottom: 60px;
+        left: 60px;
+    }
+    .title-main {
+        font-size: 96px;
+        font-weight: 600;
+        color: #d4af37;
+        line-height: 1;
+        margin-bottom: 16px;
+    }
+    .title-sub {
+        font-size: 28px;
+        margin-bottom: 16px;
+    }
+    .title-en {
+        font-size: 42px;
+        font-weight: 300;
+        opacity: 0.9;
+    }
+    .title-en-sub {
+        font-size: 18px;
+        opacity: 0.7;
+    }
 
-  .container {
-    position: relative;
-    z-index: 2;
-    width: 100%;
-    height: 100%;
-    padding: 5vw;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-  }
+    /* 右侧对齐标题 + 整体上移，不挡字 */
+    .video-wrap {
+        position: absolute;
+        right: 60px;
+        top: 30%;
+        width: 45%;
+        max-width: 500px;
+        aspect-ratio: 16 / 9;
+        z-index: 10;
+    }
 
-  .header {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 2rem;
-    animation: fadeIn 1s .2s both;
-  }
+    video {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        background: #222;
+        border-radius: 8px;
+        box-shadow: 0 10px 40px rgba(0,0,0,0.4);
+    }
 
-  .org {
-    font-size: 1rem;
-    line-height: 1.4;
-  }
+    .play-btn {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        width: 70px;
+        height: 70px;
+        background: #fff;
+        border-radius: 50%;
+        cursor: pointer;
+        z-index: 11;
+        transition: 0.2s;
+    }
+    .play-btn:hover {
+        transform: translate(-50%, -50%) scale(1.12);
+    }
+    .play-btn::after {
+        content: '';
+        position: absolute;
+        left: 55%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        width: 0;
+        height: 0;
+        border-left: 22px solid #d4af37;
+        border-top: 13px solid transparent;
+        border-bottom: 13px solid transparent;
+    }
 
-  .org-en {
-    font-size: 0.75rem;
-    opacity: 0.7;
-  }
+    .video-wrap.playing .play-btn {
+        opacity: 0;
+        pointer-events: none;
+    }
 
-  .title-box {
-    animation: fadeIn 1s .4s both;
-  }
-
-  .title-main {
-    font-size: clamp(3rem, 10vw, 7rem);
-    font-weight: 600;
-    color: #d4af37;
-    line-height: 1;
-    margin-bottom: 0.5rem;
-  }
-
-  .title-sub {
-    font-size: clamp(1.1rem, 3vw, 1.8rem);
-    margin-bottom: 0.8rem;
-  }
-
-  .title-en {
-    font-size: clamp(1.4rem, 4vw, 2.4rem);
-    font-weight: 300;
-    opacity: 0.9;
-  }
-
-  .title-en-sub {
-    font-size: clamp(0.9rem, 2vw, 1.1rem);
-    opacity: 0.7;
-  }
-
-  /* 视频容器：严格居中 */
-  .video-box {
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
-    width: min(92%, 880px);
-    aspect-ratio: 16 / 9;
-    animation: fadeIn 1s .6s both;
-  }
-
-  video {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    border-radius: 8px;
-    box-shadow: 0 10px 50px rgba(0,0,0,0.7);
-    background: #000;
-  }
-
-  /* 醒目播放按钮 */
-  .play-icon {
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
-    width: 70px;
-    height: 70px;
-    background: rgba(255,255,255,0.9);
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    z-index: 10;
-    transition: 0.2s;
-  }
-
-  .play-icon:hover {
-    transform: translate(-50%, -50%) scale(1.1);
-    background: #fff;
-  }
-
-  .play-icon::after {
-    content: '';
-    width: 0;
-    height: 0;
-    border-left: 22px solid #d4af37;
-    border-top: 13px solid transparent;
-    border-bottom: 13px solid transparent;
-    margin-left: 4px;
-  }
-
-  @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(20px); }
-    to   { opacity: 1; transform: translateY(0); }
-  }
-
-  @media (max-width:768px) {
-    .container { padding: 6vw 4vw; }
-    .play-icon { width: 60px; height: 60px; }
-  }
+    @media (max-width:768px) {
+        .header {
+            top: 30px;
+            left: 20px;
+            flex-direction: column;
+            gap: 16px;
+        }
+        .title-box {
+            bottom: 30px;
+            left: 20px;
+        }
+        .title-main {
+            font-size: 48px;
+        }
+        .video-wrap {
+            right: 20px;
+            top: 28%;
+            width: 65%;
+        }
+        .play-btn {
+            width: 55px;
+            height: 55px;
+        }
+    }
 </style>
 </head>
-
 <body>
-<div class="bg"></div>
 
-<div class="container">
-  <div class="header">
+<div class="header">
     <div class="org">
-      <div>国家艺术基金资助项目</div>
-      <div class="org-en">National Art Fund Project</div>
+        <div>国家艺术基金资助项目</div>
+        <div class="org-en">National Art Fund Project</div>
     </div>
     <div class="org">
-      <div>北京理工大学</div>
-      <div class="org-en">Beijing Institute of Technology</div>
+        <div>北京理工大学</div>
+        <div class="org-en">Beijing Institute of Technology</div>
     </div>
-  </div>
+</div>
 
-  <!-- 视频区域 -->
-  <div class="video-box">
-    <video id="video" muted loop playsinline autoplay controls>
-      <source src="video.mp4" type="video/mp4">
-    </video>
-    <div class="play-icon" id="playBtn"></div>
-  </div>
-
-  <div class="title-box">
+<div class="title-box">
     <div class="title-main">像外之境</div>
     <div class="title-sub">蓝田水陆庵彩塑艺术影像作品展</div>
     <div class="title-en">Beyond Images</div>
     <div class="title-en-sub">Video & Image Exhibition of Lantian Shuilu'an Painted Sculptures</div>
-  </div>
+</div>
+
+<div class="video-wrap" id="videoWrap">
+    <video id="video" loop playsinline controls autoplay>
+        <source src="video.mp4" type="video/mp4">
+    </video>
+    <div class="play-btn" id="playBtn"></div>
 </div>
 
 <script>
-  const video = document.getElementById('video');
-  const playBtn = document.getElementById('playBtn');
+    const video = document.getElementById('video');
+    const videoWrap = document.getElementById('videoWrap');
+    const playBtn = document.getElementById('playBtn');
 
-  // 点击播放按钮
-  playBtn.addEventListener('click', () => {
-    video.muted = false;
-    if (video.paused) {
-      video.play();
-    } else {
-      video.pause();
-    }
-  });
+    playBtn.addEventListener('click', () => {
+        if (video.paused) {
+            video.play();
+        } else {
+            video.pause();
+        }
+    });
 
-  // 播放时隐藏按钮
-  video.addEventListener('play', () => {
-    playBtn.style.opacity = '0';
-    playBtn.style.pointerEvents = 'none';
-  });
-
-  video.addEventListener('pause', () => {
-    playBtn.style.opacity = '1';
-    playBtn.style.pointerEvents = 'auto';
-  });
+    video.addEventListener('play', () => {
+        videoWrap.classList.add('playing');
+    });
+    video.addEventListener('pause', () => {
+        videoWrap.classList.remove('playing');
+    });
 </script>
+
 </body>
 </html>
