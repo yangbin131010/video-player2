@@ -63,13 +63,13 @@
         opacity: 0.7;
     }
 
-    /* 右侧对齐标题 + 整体上移，不挡字 */
+    /* 核心：标题正上方居中，不挡顶部文字 */
     .video-wrap {
         position: absolute;
-        right: 60px;
-        top: 30%;
-        width: 45%;
-        max-width: 500px;
+        left: 50%;
+        top: 32%;
+        transform: translate(-50%, -50%);
+        width: min(70%, 600px);
         aspect-ratio: 16 / 9;
         z-index: 10;
     }
@@ -117,6 +117,7 @@
         pointer-events: none;
     }
 
+    /* 手机端完美居中，不靠边、不靠右 */
     @media (max-width:768px) {
         .header {
             top: 30px;
@@ -131,10 +132,15 @@
         .title-main {
             font-size: 48px;
         }
+        .title-sub {
+            font-size: 18px;
+        }
+        .title-en {
+            font-size: 24px;
+        }
         .video-wrap {
-            right: 20px;
-            top: 28%;
-            width: 65%;
+            top: 30%;
+            width: 80%;
         }
         .play-btn {
             width: 55px;
