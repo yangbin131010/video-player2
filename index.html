@@ -63,15 +63,16 @@
         opacity: 0.7;
     }
 
-    /* 核心：标题正上方居中，不挡顶部文字 */
+    /* 关键：视频底部对齐大标题，不挡上方文字 */
     .video-wrap {
         position: absolute;
         left: 50%;
-        top: 32%;
-        transform: translate(-50%, -50%);
+        bottom: 280px;
+        transform: translate(-50%, 0);
         width: min(70%, 600px);
         aspect-ratio: 16 / 9;
         z-index: 10;
+        cursor: grab;
     }
 
     video {
@@ -117,7 +118,6 @@
         pointer-events: none;
     }
 
-    /* 手机端完美居中，不靠边、不靠右 */
     @media (max-width:768px) {
         .header {
             top: 30px;
@@ -135,11 +135,8 @@
         .title-sub {
             font-size: 18px;
         }
-        .title-en {
-            font-size: 24px;
-        }
         .video-wrap {
-            top: 30%;
+            bottom: 200px;
             width: 80%;
         }
         .play-btn {
@@ -177,24 +174,58 @@
 </div>
 
 <script>
-    const video = document.getElementById('video');
-    const videoWrap = document.getElementById('videoWrap');
-    const playBtn = document.getElementById('playBtn');
+const el = document.getElementById('videoWrap');
+let isDragging = false;
+let startX, startY, left, top;
 
-    playBtn.addEventListener('click', () => {
-        if (video.paused) {
-            video.play();
-        } else {
-            video.pause();
-        }
-    });
+el.addEventListener('mousedown', startDrag);
+el.addEventListener('touchstart', startDrag, { passive: true });
 
-    video.addEventListener('play', () => {
-        videoWrap.classList.add('playing');
-    });
-    video.addEventListener('pause', () => {
-        videoWrap.classList.remove('playing');
-    });
+document.addEventListener('mousemove', drag);
+document.addEventListener('touchmove', drag, { passive: true });
+
+document.addEventListener('mouseup', endDrag);
+document.addEventListener('touchend', endDrag);
+
+function startDrag(e) {
+    isDragging = true;
+    const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+    const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+    startX = clientX;
+    startY = clientY;
+    const rect = el.getBoundingClientRect();
+    left = rect.left;
+    top = rect.top;
+    el.style.transform = 'none';
+}
+
+function drag(e) {
+    if (!isDragging) return;
+    const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+    const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+    const dx = clientX - startX;
+    const dy = clientY - startY;
+    el.style.left = left + dx + 'px';
+    el.style.top = top + dy + 'px';
+}
+
+function endDrag() {
+    isDragging = false;
+}
+
+const video = document.getElementById('video');
+const playBtn = document.getElementById('playBtn');
+
+playBtn.addEventListener('click', () => {
+    video.paused ? video.play() : video.pause();
+});
+
+video.addEventListener('play', () => {
+    videoWrap.classList.add('playing');
+});
+video.addEventListener('pause', () => {
+    videoWrap.classList.remove('playing');
+});
 </script>
 
 </body>
