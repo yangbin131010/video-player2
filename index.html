@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>像外之境 - 蓝田水陆庵彩塑艺术影像作品展</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:100%;height:100%;font-family:"PingFang SC","Microsoft YaHei",serif;color:#fff;overflow:hidden}
+
+/* 背景 */
+.bg{position:fixed;inset:0;background:url("bg.jpg") center/cover no-repeat;z-index:0}
+.bg::after{content:"";position:absolute;inset:0;background:rgba(0,0,0,0.25);z-index:1}
+
+/* 容器 */
+.container{position:relative;z-index:2;width:100%;height:100%;padding:5vw;display:flex;flex-direction:column;justify-content:space-between}
+
+/* 顶部信息 */
+.header{display:flex;flex-wrap:wrap;gap:2rem;align-items:center;opacity:.9;animation:fadeIn 1s .2s both}
+.org{font-size:1rem;line-height:1.4}
+.org-en{font-size:.75rem;text-transform:uppercase;opacity:.7}
+
+/* 标题 */
+.title-box{animation:fadeIn 1s .4s both}
+.title-main{font-size:clamp(3rem,10vw,7rem);font-weight:600;color:#d4af37;line-height:1;margin-bottom:.5rem;letter-spacing:.05em}
+.title-sub{font-size:clamp(1.1rem,3vw,1.8rem);margin-bottom:.8rem;opacity:.95}
+.title-en{font-size:clamp(1.4rem,4vw,2.4rem);font-weight:300;text-transform:uppercase;opacity:.9}
+.title-en-sub{font-size:clamp(.9rem,2vw,1.1rem);opacity:.7;text-transform:uppercase}
+
+/* 视频区域 - 点击可播放 */
+.video-wrap{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:min(90%,900px);aspect-ratio:16/9;animation:fadeIn 1s .6s both;cursor:pointer}
+.video-wrap video{width:100%;height:100%;object-fit:cover;border-radius:8px;box-shadow:0 10px 60px rgba(0,0,0,.6);background:#000}
+
+/* 渐入动画 */
+@keyframes fadeIn{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+
+/* 移动端适配 */
+@media (max-width:768px){
+  .container{padding:6vw 4vw}
+  .header{gap:1rem}
+  .video-wrap{width:95%}
+}
+</style>
+</head>
+
+<body>
+<div class="bg"></div>
+<div class="container">
+
+  <!-- 顶部信息 -->
+  <div class="header">
+    <div class="org">
+      <div>国家艺术基金资助项目</div>
+      <div class="org-en">National Art Fund Project</div>
+    </div>
+    <div class="org">
+      <div>北京理工大学</div>
+      <div class="org-en">Beijing Institute of Technology</div>
+    </div>
+  </div>
+
+  <!-- 视频：点击播放/暂停 -->
+  <div class="video-wrap" onclick="togglePlay()">
+    <video id="video" muted loop playsinline autoplay src="video.mp4"></video>
+  </div>
+
+  <!-- 展览标题 -->
+  <div class="title-box">
+    <div class="title-main">像外之境</div>
+    <div class="title-sub">蓝田水陆庵彩塑艺术影像作品展</div>
+    <div class="title-en">Beyond Images</div>
+    <div class="title-en-sub">Video & Image Exhibition of Lantian Shuilu'an Painted Sculptures</div>
+  </div>
+</div>
+
+<script>
+// 点击视频播放/暂停
+const video = document.getElementById('video');
+function togglePlay() {
+  video.muted = false;
+  if (video.paused) {
+    video.play();
+  } else {
+    video.pause();
+  }
+}
+</script>
+</body>
+</html>
