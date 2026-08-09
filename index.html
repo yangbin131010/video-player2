@@ -101,11 +101,17 @@
         pointer-events: none;
     }
 
-    /* 手机端适配：contain 完整显示整张背景图（左右都可见），视频下方居中避让文字 */
+    /* 手机端适配：背景图宽度铺满屏幕，左右内容完整可见，视频下方居中避让文字 */
     @media (max-width:768px) {
+        .bg-layer {
+            overflow: auto;
+            -webkit-overflow-scrolling: touch;
+        }
         .bg-layer img {
-            object-fit: contain;
-            object-position: center;
+            width: 100%;
+            height: auto;
+            object-fit: fill;
+            object-position: center top;
         }
         .video-wrap {
             left: 50%;
