@@ -101,17 +101,17 @@
         pointer-events: none;
     }
 
-    /* 手机端适配：cover 全屏铺满，左对齐保留文字标题，视频移右侧避让文字 */
+    /* 手机端适配：contain 完整显示整张背景图（左右都可见），视频下方居中避让文字 */
     @media (max-width:768px) {
         .bg-layer img {
-            object-fit: cover;
-            object-position: left center;
+            object-fit: contain;
+            object-position: center;
         }
         .video-wrap {
-            left: 72%;
-            top: 45%;
+            left: 50%;
+            top: 78%;
             transform: translate(-50%, -50%);
-            width: 48%;
+            width: 52%;
         }
         .play-btn {
             width: 50px;
