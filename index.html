@@ -28,16 +28,28 @@
         background: #16120a;
     }
 
-    /* 背景用绝对定位的 img 层，保证手机端完整显示整张图片 */
-    .bg-layer {
+    /* 模糊填充层：铺满全屏，消除手机端上下空白 */
+    .bg-fill {
         position: fixed;
         top: 0;
         left: 0;
         width: 100%;
         height: 100%;
         z-index: 0;
+        background: url('bg.png') center center / cover no-repeat;
+        filter: blur(24px) brightness(0.9);
+        transform: scale(1.15);
+        pointer-events: none;
+    }
+
+    /* 背景主体层：完整显示背景图片 */
+    .bg-layer {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        z-index: 1;
         overflow: hidden;
-        background: #16120a;
+        background: transparent;
     }
 
     .bg-layer img {
@@ -102,29 +114,31 @@
         pointer-events: none;
     }
 
-    /* 手机端适配：背景图宽度铺满屏幕整体可滚动，视频相对图片居中靠右 */
+    /* 手机端适配：背景图cover铺满全屏消除空白，靠左保留左侧文字，视频居中靠右避让 */
     @media (max-width:768px) {
-        body {
-            overflow: auto;
-            -webkit-overflow-scrolling: touch;
+        .bg-fill {
+            display: none;
         }
         .bg-layer {
-            position: relative;
+            position: fixed;
+            top: 0;
+            left: 0;
             width: 100%;
-            height: auto;
-            overflow: visible;
+            height: 100%;
+            overflow: hidden;
         }
         .bg-layer img {
             width: 100%;
-            height: auto;
-            object-fit: fill;
-            object-position: center top;
+            height: 100%;
+            object-fit: cover;
+            object-position: 20% center;
+            display: block;
         }
         .video-wrap {
-            left: 65%;
+            left: 64%;
             top: 50%;
             transform: translate(-50%, -50%);
-            width: 52%;
+            width: 48%;
         }
         .play-btn {
             width: 50px;
@@ -139,6 +153,8 @@
 </style>
 </head>
 <body>
+
+<div class="bg-fill" aria-hidden="true"></div>
 
 <div class="bg-layer" aria-hidden="true">
     <picture>
