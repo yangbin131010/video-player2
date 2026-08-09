@@ -114,10 +114,11 @@
         pointer-events: none;
     }
 
-    /* 手机端适配：背景图cover铺满全屏消除空白，靠左保留左侧文字，视频居中靠右避让 */
+    /* 手机端适配：模糊填充铺满全屏消除空白，完整图左右可见，视频居中靠右避让 */
     @media (max-width:768px) {
         .bg-fill {
-            display: none;
+            display: block;
+            background: url('bg-mobile.jpg') center center / cover no-repeat;
         }
         .bg-layer {
             position: fixed;
@@ -130,15 +131,15 @@
         .bg-layer img {
             width: 100%;
             height: 100%;
-            object-fit: cover;
-            object-position: 20% center;
+            object-fit: contain;
+            object-position: center;
             display: block;
         }
         .video-wrap {
-            left: 64%;
+            left: 66%;
             top: 50%;
             transform: translate(-50%, -50%);
-            width: 48%;
+            width: 46%;
         }
         .play-btn {
             width: 50px;
