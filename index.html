@@ -25,6 +25,7 @@
         overflow: hidden;
         font-family: "PingFang SC", "Microsoft YaHei", serif;
         color: #fff;
+        background: #16120a;
     }
 
     /* 背景用绝对定位的 img 层，保证手机端完整显示整张图片 */
@@ -101,11 +102,17 @@
         pointer-events: none;
     }
 
-    /* 手机端适配：背景图宽度铺满屏幕，左右内容完整可见，视频下方居中避让文字 */
+    /* 手机端适配：背景图宽度铺满屏幕整体可滚动，视频相对图片居中靠右 */
     @media (max-width:768px) {
-        .bg-layer {
+        body {
             overflow: auto;
             -webkit-overflow-scrolling: touch;
+        }
+        .bg-layer {
+            position: relative;
+            width: 100%;
+            height: auto;
+            overflow: visible;
         }
         .bg-layer img {
             width: 100%;
@@ -138,13 +145,12 @@
         <source media="(max-width:768px)" srcset="bg-mobile.jpg">
         <img src="bg.png" alt="">
     </picture>
-</div>
-
-<div class="video-wrap" id="videoWrap">
-    <video id="video" loop playsinline controls autoplay>
-        <source src="video.mp4" type="video/mp4">
-    </video>
-    <div class="play-btn" id="playBtn"></div>
+    <div class="video-wrap" id="videoWrap">
+        <video id="video" loop playsinline controls autoplay>
+            <source src="video.mp4" type="video/mp4">
+        </video>
+        <div class="play-btn" id="playBtn"></div>
+    </div>
 </div>
 
 <script>
