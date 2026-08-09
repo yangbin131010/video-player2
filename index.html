@@ -128,7 +128,10 @@
 <body>
 
 <div class="bg-layer" aria-hidden="true">
-    <img src="bg.png" alt="">
+    <picture>
+        <source media="(max-width:768px)" srcset="bg-mobile.jpg">
+        <img src="bg.png" alt="">
+    </picture>
 </div>
 
 <div class="video-wrap" id="videoWrap">
